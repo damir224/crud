@@ -7,7 +7,13 @@ import {
   fetchDelCard,
   fetchLikeCard,
 } from './asyncFunc.js';
-import { getCardsAC, addCardAC, delCardAC, likeCardAC } from '../actions';
+import {
+  getCardsAC,
+  addCardAC,
+  delCardAC,
+  likeCardAC,
+  updateCardAC,
+} from '../actions';
 
 const obj = {
   data: {
@@ -188,8 +194,8 @@ export function* addCardWorker({ payload }) {
 export function* updateCardWorker({ payload }) {
   try {
     const data = yield call(fetchUpdateCard, payload);
-    // if (data.success) return yield put(addCardAC(data.data));
-    // throw data.errors.content;
+    if (data.success) return yield put(updateCardAC(data.data));
+    throw data.errors;
   } catch (error) {
     console.error('Ошибка:', error);
   }

@@ -2,8 +2,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import { Button, TextField } from '@material-ui/core/';
 import { useDispatch, useSelector } from 'react-redux';
 import { signupSagaAC, loginSagaAC } from '../store/user/actions.js';
 import { Redirect } from 'react-router';

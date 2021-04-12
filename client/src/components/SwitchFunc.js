@@ -1,11 +1,9 @@
 import React from 'react';
-import { Route, BrowserRouter as Router, Switch, Link } from 'react-router-dom';
-
+import { Route, Switch } from 'react-router-dom';
 import CardList from './CardList.js';
 import AuthForm from './AuthForm.js';
 import CardInfo from './CardInfo';
 import AddCard from './AddCard';
-
 import Logout from './Logout.js';
 
 export default function SwitchFunc() {

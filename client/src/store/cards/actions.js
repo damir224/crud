@@ -28,9 +28,9 @@ export const updateCardSagaAC = (updatedCard) => ({
   type: actionTypes.UPDATE_CARD_SAGA,
   payload: updatedCard,
 });
-export const updateCardAC = (newCard) => ({
+export const updateCardAC = (updatedCard) => ({
   type: actionTypes.UPDATE_CARD,
-  payload: newCard,
+  payload: updatedCard,
 });
 export const delCardSagaAC = (obj) => ({
   type: actionTypes.DEL_CARD_SAGA,

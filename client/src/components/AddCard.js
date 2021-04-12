@@ -9,7 +9,6 @@ import {
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCardSagaAC } from '../store/cards/actions.js';
-import { Redirect } from 'react-router';
 
 const width = 300;
 const useStyles = makeStyles({

@@ -1,11 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  getCardInfoSagaAC,
-  updateCardSagaAC,
-  delCardSagaAC,
-} from '../store/cards/actions.js';
-
+import { updateCardSagaAC, delCardSagaAC } from '../store/cards/actions.js';
 import {
   FormControl,
   TextField,
@@ -61,9 +56,6 @@ export default function CardInfo() {
       dispatch(updateCardSagaAC({ title, description, id, token }));
     },
   });
-  // useEffect(() => {
-  //   dispatch(getCardInfoSagaAC(token));
-  // }, [dispatch]);
 
   return (
     <Box className={classes.root} component='span' m={1}>

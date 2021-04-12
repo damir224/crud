@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import SimpleCard from './SimpleCard';
-import { Container } from '@material-ui/core';
-import Card from '@material-ui/core/Card';
+import { makeStyles, Container, Card, Typography } from '@material-ui/core/';
 import AddBoxIcon from '@material-ui/icons/AddBox';
-import Typography from '@material-ui/core/Typography';
+import SimpleCard from './SimpleCard';
 import { getCardsSagaAC } from '../store/cards/actions.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -33,7 +30,7 @@ export default function CardList() {
   const cardListArr = state.cardsReducers.cards;
   useEffect(() => {
     dispatch(getCardsSagaAC(state.userReducers.user.token));
-  }, [dispatch]);
+  });
   return (
     <>
       <Typography variant='h2' align='center'>

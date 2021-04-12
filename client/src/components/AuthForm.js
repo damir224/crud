@@ -107,7 +107,6 @@ const AuthForm = ({ type }) => {
             fullWidth
             id='birthdate'
             name='birthdate'
-            label='Birth date'
             type='date'
             // value={formik.values.birthdate}
             onChange={formik.handleChange}

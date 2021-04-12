@@ -8,6 +8,6 @@ export default function Logout() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(logoutAC());
-  }, [dispatch]);
+  }, []);
   return <>{state.userReducers.user.isAuth && <Redirect to='/' />}</>;
 }

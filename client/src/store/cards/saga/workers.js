@@ -1,4 +1,5 @@
 import { put, call } from 'redux-saga/effects';
+import uniFetch from '../../helper';
 
 import {
   getCardsAC,
@@ -157,41 +158,14 @@ const obj = {
   success: true,
 };
 
-async function uniFetch(token, url, method, payload = null) {
-  let response;
-  if (method === 'GET') {
-    console.log('HERE!');
-    response = await fetch(url, {
-      method: method,
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Application-Key': 'L4X9QeKoYrYh6n1Wh9P7yxyjpsFnLSItek7bLTE5',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  } else {
-    response = await fetch(url, {
-      method: method,
-      body: JSON.stringify(payload),
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Application-Key': 'L4X9QeKoYrYh6n1Wh9P7yxyjpsFnLSItek7bLTE5',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  }
-  return await response.json();
-}
-
 export function* getCardsWorker({ payload }) {
-  console.log(payload);
   const url =
     'http://rest-api.noveogroup.com/api/v1/posts?liked=true&order_by=id&sort=asc&page=1&per_page=8';
   try {
     const data = yield call(uniFetch, payload, url, 'GET');
     // const data = yield call(fetchGetCards, payload);
-    if (data.success) return yield put(getCardsAC(data.data)); // prod
-    // if (data.success) return yield put(getCardsAC(obj.data)); // temp
+    // if (data.success) return yield put(getCardsAC(data.data)); // prod
+    if (data.success) return yield put(getCardsAC(obj.data)); // temp
     throw data.errors;
   } catch (error) {
     console.error('Ошибка:', error);

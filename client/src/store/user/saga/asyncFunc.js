@@ -1,3 +1,4 @@
+// import { signupFetch, loginFetch, userInfoFetch } from './asyncFunc';
 export async function signupFetch({ obj }) {
   const url = 'http://rest-api.noveogroup.com/api/v1/register';
   const response = await fetch(url, {

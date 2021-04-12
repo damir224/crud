@@ -30,12 +30,14 @@ export default function CardList() {
   const cardListArr = state.cardsReducers.cards;
   useEffect(() => {
     dispatch(getCardsSagaAC(state.userReducers.user.token));
-  }, [dispatch]);
+  }, [dispatch, state.userReducers.user.token]);
   return (
     <>
-      <Typography variant='h2' align='center'>
-        Card List
-      </Typography>
+      {cardListArr.length !== 0 && (
+        <Typography variant='h2' align='center'>
+          Card List
+        </Typography>
+      )}
       <Container className={classes.root}>
         {state.userReducers.user.role === 'admin' ? (
           <Card
@@ -56,9 +58,15 @@ export default function CardList() {
             </Link>
           </Card>
         ) : null}
-        {cardListArr.map((e) => {
-          return <SimpleCard key={e.id} card={e} />;
-        })}
+        {cardListArr.length ? (
+          cardListArr.map((e) => {
+            return <SimpleCard key={e.id} card={e} />;
+          })
+        ) : (
+          <Typography variant='h4'>
+            Sorry! You need to be logged in to access this page.
+          </Typography>
+        )}
       </Container>
     </>
   );

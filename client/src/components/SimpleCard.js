@@ -55,11 +55,13 @@ export default function SimpleCard({
         </Typography>
       </CardContent>
       <CardActions className={classes.button}>
-        <Link to={`/info/${id}`}>
-          <Button size='small'>
-            <EditIcon />
-          </Button>
-        </Link>
+        {state.userReducers.user.role === 'admin' ? (
+          <Link to={`/info/${id}`}>
+            <Button size='small'>
+              <EditIcon />
+            </Button>
+          </Link>
+        ) : null}
         <Button
           size='small'
           onClick={() => {

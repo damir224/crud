@@ -40,20 +40,25 @@ export default function CardList() {
         Card List
       </Typography>
       <Container className={classes.root}>
-        <Card
-          className={classes.add}
-          style={{
-            borderStyle: 'dashed',
-            borderRadius: 4,
-            borderWidth: 1,
-          }}
-        >
-          <Link to='/create'>
-            <div style={{ display: 'flex' }}>
-              <AddBoxIcon />
-            </div>
-          </Link>
-        </Card>
+        {state.userReducers.user.role === 'admin' ? (
+          <Card
+            className={classes.add}
+            style={{
+              borderStyle: 'dashed',
+              borderRadius: 4,
+              borderWidth: 1,
+            }}
+          >
+            <Link
+              to='/create'
+              style={{ textDecoration: 'none', color: 'black' }}
+            >
+              <div style={{ display: 'flex' }}>
+                <AddBoxIcon fontSize='large' />
+              </div>
+            </Link>
+          </Card>
+        ) : null}
         {cardListArr.map((e) => {
           return <SimpleCard key={e.id} card={e} />;
         })}

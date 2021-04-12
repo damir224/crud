@@ -61,9 +61,9 @@ export default function CardInfo() {
       dispatch(updateCardSagaAC({ title, description, id, token }));
     },
   });
-  useEffect(() => {
-    dispatch(getCardInfoSagaAC(token));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getCardInfoSagaAC(token));
+  // }, [dispatch]);
 
   return (
     <Box className={classes.root} component='span' m={1}>

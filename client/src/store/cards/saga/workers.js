@@ -160,8 +160,6 @@ const obj = {
 export function* getCardsWorker({ payload }) {
   try {
     const data = yield call(fetchGetCards, payload);
-    console.log(`data.posts from getCardsWorker`, data);
-
     // if (data.success) return yield put(getCardsAC(data.data));
     if (data.success) return yield put(getCardsAC(obj.data));
     throw data.errors;
@@ -181,7 +179,6 @@ export function* getCardInfoWorker({ payload }) {
 export function* addCardWorker({ payload }) {
   try {
     const data = yield call(fetchAddCard, payload);
-    console.log(`data`, data);
     if (data.success) return yield put(addCardAC(data.data));
     throw data.errors.content;
   } catch (error) {
@@ -191,7 +188,6 @@ export function* addCardWorker({ payload }) {
 export function* updateCardWorker({ payload }) {
   try {
     const data = yield call(fetchUpdateCard, payload);
-    console.log(`data updateCardWorker`, data);
     // if (data.success) return yield put(addCardAC(data.data));
     // throw data.errors.content;
   } catch (error) {
@@ -201,7 +197,6 @@ export function* updateCardWorker({ payload }) {
 export function* delCardWorker({ payload }) {
   try {
     const data = yield call(fetchDelCard, payload);
-    console.log(`data, delCardWorker`, data);
     if (data.success) return yield put(delCardAC(payload.id));
     throw data.errors.content;
   } catch (error) {
@@ -211,7 +206,6 @@ export function* delCardWorker({ payload }) {
 export function* likeCardWorker({ payload }) {
   try {
     const data = yield call(fetchLikeCard, payload);
-    console.log(`data, delCardWorker`, data);
     if (data.success) return yield put(likeCardAC(data.data));
     throw data.errors.content;
   } catch (error) {
@@ -367,4 +361,3 @@ export function* likeCardWorker({ payload }) {
 //   errors: [],
 //   success: true,
 // };
-// console.log(`obj`, obj);

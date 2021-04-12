@@ -42,12 +42,9 @@ const AuthForm = ({ type }) => {
     },
     validationSchema: validationSchema,
     onSubmit: ({ email, password, name, last_name, birthdate }) => {
-      console.log(1);
       if (type === 'login') {
-        console.log(type === 'login');
         dispatch(loginSagaAC({ email, password }));
       } else {
-        console.log(type === 'login');
         dispatch(signupSagaAC({ email, password, name, last_name, birthdate }));
       }
     },

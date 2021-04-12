@@ -4,12 +4,9 @@ const prelodableState = {
   // cardInfo: {},
 };
 const cardsReducers = (state = prelodableState, action) => {
-  console.log(`action.payload`, action.payload);
   switch (action.type) {
     case actionTypes.GET_CARDS:
-      console.log(`action.payload`, action.payload);
       return { ...state, cards: [...action.payload] };
-    // return { ...state, cards: [...action.payload] };
     // case actionTypes.GET_CARD_INFO:
     //   return { ...state, cardInfo: [...action.payload] };
     case actionTypes.ADD_CARD:

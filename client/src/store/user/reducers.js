@@ -12,7 +12,6 @@ const prelodableState = {
   },
 };
 const userReducers = (state = prelodableState, action) => {
-  console.log(`action`, action);
   switch (action.type) {
     case actionTypes.LOGIN_AUTH:
       return {

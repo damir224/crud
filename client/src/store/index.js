@@ -28,7 +28,6 @@ const composeEnhancer =
     : composeWithDevTools(applyMiddleware(sagaMiddleware));
 
 export const store = createStore(reducers, composeEnhancer);
-console.log('test redux/index.js');
 
 sagaMiddleware.run(function* () {
   yield all([

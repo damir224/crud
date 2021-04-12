@@ -30,7 +30,7 @@ export default function CardList() {
   const cardListArr = state.cardsReducers.cards;
   useEffect(() => {
     dispatch(getCardsSagaAC(state.userReducers.user.token));
-  });
+  }, [dispatch]);
   return (
     <>
       <Typography variant='h2' align='center'>

@@ -1,12 +1,5 @@
 import { put, call } from 'redux-saga/effects';
-import {
-  fetchGetCards,
-  fetchGetCardInfo,
-  fetchAddCard,
-  fetchUpdateCard,
-  fetchDelCard,
-  fetchLikeCard,
-} from './asyncFunc.js';
+
 import {
   getCardsAC,
   addCardAC,
@@ -163,28 +156,56 @@ const obj = {
   errors: [],
   success: true,
 };
+
+async function uniFetch(token, url, method, payload = null) {
+  let response;
+  if (method === 'GET') {
+    console.log('HERE!');
+    response = await fetch(url, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Application-Key': 'L4X9QeKoYrYh6n1Wh9P7yxyjpsFnLSItek7bLTE5',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } else {
+    response = await fetch(url, {
+      method: method,
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Application-Key': 'L4X9QeKoYrYh6n1Wh9P7yxyjpsFnLSItek7bLTE5',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  return await response.json();
+}
+
 export function* getCardsWorker({ payload }) {
+  console.log(payload);
+  const url =
+    'http://rest-api.noveogroup.com/api/v1/posts?liked=true&order_by=id&sort=asc&page=1&per_page=8';
   try {
-    const data = yield call(fetchGetCards, payload);
-    // if (data.success) return yield put(getCardsAC(data.data));
-    if (data.success) return yield put(getCardsAC(obj.data));
+    const data = yield call(uniFetch, payload, url, 'GET');
+    // const data = yield call(fetchGetCards, payload);
+    if (data.success) return yield put(getCardsAC(data.data)); // prod
+    // if (data.success) return yield put(getCardsAC(obj.data)); // temp
     throw data.errors;
   } catch (error) {
     console.error('Ошибка:', error);
   }
 }
-export function* getCardInfoWorker({ payload }) {
-  try {
-    const data = yield call(fetchGetCardInfo, payload);
-    // if (data.success) return yield put(getCardsAC(data.data));
-    // throw data.errors;
-  } catch (error) {
-    console.error('Ошибка:', error);
-  }
-}
+
 export function* addCardWorker({ payload }) {
+  const url = `http://rest-api.noveogroup.com/api/v1/posts`;
   try {
-    const data = yield call(fetchAddCard, payload);
+    const data = yield call(uniFetch, payload.token, url, 'POST', {
+      title: payload.title,
+      content: payload.description,
+    });
+    // const data = yield call(fetchAddCard, payload);
     if (data.success) return yield put(addCardAC(data.data));
     throw data.errors.content;
   } catch (error) {
@@ -192,8 +213,13 @@ export function* addCardWorker({ payload }) {
   }
 }
 export function* updateCardWorker({ payload }) {
+  const url = `http://rest-api.noveogroup.com/api/v1/posts/${payload.id}`;
   try {
-    const data = yield call(fetchUpdateCard, payload);
+    const data = yield call(uniFetch, payload.token, url, 'PUT', {
+      title: payload.title,
+      content: payload.description,
+    });
+    // const data = yield call(fetchUpdateCard, payload);
     if (data.success) return yield put(updateCardAC(data.data));
     throw data.errors;
   } catch (error) {
@@ -201,8 +227,13 @@ export function* updateCardWorker({ payload }) {
   }
 }
 export function* delCardWorker({ payload }) {
+  const url = `http://rest-api.noveogroup.com/api/v1/posts/${payload.id}`;
   try {
-    const data = yield call(fetchDelCard, payload);
+    const data = yield call(uniFetch, payload.token, url, 'PUT', {
+      title: payload.title,
+      content: payload.description,
+    });
+    // const data = yield call(fetchDelCard, payload);
     if (data.success) return yield put(delCardAC(payload.id));
     throw data.errors.content;
   } catch (error) {
@@ -210,8 +241,10 @@ export function* delCardWorker({ payload }) {
   }
 }
 export function* likeCardWorker({ payload }) {
+  const url = `http://rest-api.noveogroup.com/api/v1/posts/${payload.id}/like`;
   try {
-    const data = yield call(fetchLikeCard, payload);
+    const data = yield call(uniFetch, payload.token, url, 'POST', payload);
+    // const data = yield call(fetchLikeCard, payload);
     if (data.success) return yield put(likeCardAC(data.data));
     throw data.errors.content;
   } catch (error) {

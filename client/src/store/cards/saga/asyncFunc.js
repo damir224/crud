@@ -1,3 +1,12 @@
+// import {
+//   fetchGetCardInfo,
+//   fetchGetCards,
+//   fetchAddCard,
+//   fetchUpdateCard,
+//   fetchDelCard,
+//   fetchLikeCard,
+// } from './asyncFunc.js';
+
 export async function fetchGetCards(token) {
   const url =
     'http://rest-api.noveogroup.com/api/v1/posts?liked=true&order_by=id&sort=asc&page=1&per_page=8';
@@ -38,7 +47,7 @@ export async function fetchAddCard({ title, description, token }) {
   return await response.json();
 }
 export async function fetchUpdateCard({ title, description, id, token }) {
-  const url = ` http://rest-api.noveogroup.com/api/v1/posts/${id}`;
+  const url = `http://rest-api.noveogroup.com/api/v1/posts/${id}`;
   const response = await fetch(url, {
     method: 'PUT',
     body: JSON.stringify({ title, content: description }),

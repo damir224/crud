@@ -6,7 +6,6 @@ import { all } from 'redux-saga/effects';
 import userReducers from './user/reducers.js';
 import cardsReducers from './cards/reducers.js';
 import {
-  getCardInfoWatcher,
   getCardsWatcher,
   addCardWatcher,
   updateCardWatcher,
@@ -32,7 +31,6 @@ export const store = createStore(reducers, composeEnhancer);
 sagaMiddleware.run(function* () {
   yield all([
     getCardsWatcher(),
-    getCardInfoWatcher(),
     addCardWatcher(),
     updateCardWatcher(),
     delCardWatcher(),

@@ -8,10 +8,6 @@ export const getCardsAC = (cardArr) => ({
   type: actionTypes.GET_CARDS,
   payload: cardArr.posts,
 });
-export const getCardInfoSagaAC = (token) => ({
-  type: actionTypes.GET_CARD_INFO_SAGA,
-  payload: token,
-});
 export const getCardInfoAC = (cardArr) => ({
   type: actionTypes.GET_CARD_INFO,
   payload: cardArr.posts,

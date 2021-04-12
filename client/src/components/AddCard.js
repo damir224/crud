@@ -1,11 +1,4 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  getCardInfoSagaAC,
-  updateCardSagaAC,
-  delCardSagaAC,
-} from '../store/cards/actions.js';
-
+import React from 'react';
 import {
   FormControl,
   TextField,
@@ -14,7 +7,9 @@ import {
   Button,
 } from '@material-ui/core';
 import { useFormik } from 'formik';
-import { useParams } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCardSagaAC } from '../store/cards/actions.js';
+import { Redirect } from 'react-router';
 
 const width = 300;
 const useStyles = makeStyles({
@@ -40,30 +35,28 @@ const useStyles = makeStyles({
     marginTop: '1em',
     height: width - 150,
   },
-  buttonGroup: { display: 'flex', justifyContent: 'space-between' },
   button: { marginTop: '2em' },
 });
 
-export default function CardInfo() {
-  const { id } = useParams();
+export default function AddCard() {
   const state = useSelector((state) => state);
-  const token = state.userReducers.user.token;
-
-  const cardInfo = state.cardsReducers.cards.filter((e) => +e.id === +id)[0];
   const dispatch = useDispatch();
   const classes = useStyles();
   const formik = useFormik({
     initialValues: {
-      title: cardInfo.title,
-      description: cardInfo.content,
+      title: '',
+      description: '',
     },
     onSubmit: ({ title, description }) => {
-      dispatch(updateCardSagaAC({ title, description, id, token }));
+      dispatch(
+        addCardSagaAC({
+          title,
+          description,
+          token: state.userReducers.user.token,
+        })
+      );
     },
   });
-  useEffect(() => {
-    dispatch(getCardInfoSagaAC(token));
-  }, [dispatch]);
 
   return (
     <Box className={classes.root} component='span' m={1}>
@@ -96,27 +89,13 @@ export default function CardInfo() {
               rows={6}
               variant='outlined'
             />
-            <div className={classes.buttonGroup}>
-              <Button
-                className={classes.button}
-                variant='contained'
-                type='submit'
-                color='primary'
-              >
-                Save
-              </Button>
-
-              <Button
-                className={classes.button}
-                variant='contained'
-                color='secondary'
-                onClick={() => {
-                  dispatch(delCardSagaAC({ id, token }));
-                }}
-              >
-                Delete
-              </Button>
-            </div>
+            <Button
+              className={classes.button}
+              variant='contained'
+              type='submit'
+            >
+              Save
+            </Button>
           </FormControl>
         </form>
       </div>

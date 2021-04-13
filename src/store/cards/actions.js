@@ -32,9 +32,9 @@ export const delCardSagaAC = (obj) => ({
   type: actionTypes.DEL_CARD_SAGA,
   payload: obj,
 });
-export const delCardAC = ({ id }) => ({
+export const delCardAC = (id) => ({
   type: actionTypes.DEL_CARD,
-  payload: id,
+  payload: { id },
 });
 export const likeCardSagaAC = (obj) => ({
   type: actionTypes.LIKE_CARD_SAGA,

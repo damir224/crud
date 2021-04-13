@@ -9,6 +9,7 @@ import {
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCardSagaAC } from '../store/cards/actions.js';
+import { Redirect } from 'react-router-dom';
 
 const width = 300;
 const useStyles = makeStyles({
@@ -41,24 +42,27 @@ export default function AddCard() {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const classes = useStyles();
+  const refDone = React.useRef(false);
   const formik = useFormik({
     initialValues: {
       title: '',
       description: '',
     },
-    onSubmit: ({ title, description }) => {
-      dispatch(
+    onSubmit: async ({ title, description }) => {
+      await dispatch(
         addCardSagaAC({
           title,
           description,
           token: state.userReducers.user.token,
         })
       );
+      refDone.current = true;
     },
   });
 
   return (
     <Box className={classes.root} component='span' m={1}>
+      {refDone.current && <Redirect to='/' />}
       <div className={classes.conteiner}>
         <form onSubmit={formik.handleSubmit}>
           <FormControl variant='outlined'>

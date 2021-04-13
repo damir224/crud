@@ -8,19 +8,14 @@ import { signupSagaAC, loginSagaAC } from '../store/user/actions.js';
 import { Redirect } from 'react-router';
 
 const validationSchema = yup.object({
-  email: yup
-    .string('Enter your email')
-    .email('Enter a valid email')
-    .required('Email is required'),
+  email: yup.string('Enter your email').email('Enter a valid email'),
   password: yup
     .string('Enter your password')
-    .min(3, 'Password should be of minimum 6 characters length')
-    .required('Password is required'),
+    .min(3, 'Password should be of minimum 6 characters length'),
   name: yup
     .string('Enter your first name')
     .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
+    .max(50, 'Too Long!'),
   last_name: yup.string().min(2, 'Too Short!').max(50, 'Too Long!'),
   birthdate: yup
     .date()
@@ -35,9 +30,9 @@ const AuthForm = ({ type }) => {
     initialValues: {
       email: 'admin@noveogroup.com',
       password: 'password',
-      name: 'Tester',
-      last_name: 'Testson',
-      birthdate: '1974-05-01',
+      name: '',
+      last_name: '',
+      birthdate: '',
     },
     validationSchema: validationSchema,
     onSubmit: ({ email, password, name, last_name, birthdate }) => {
@@ -48,7 +43,6 @@ const AuthForm = ({ type }) => {
       }
     },
   });
-
   return (
     <div>
       {state.userReducers.user.isAuth && <Redirect to='/' />}

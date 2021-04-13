@@ -27,10 +27,14 @@ export default function CardList() {
   const dispatch = useDispatch();
   const classes = useStyles();
   const state = useSelector((state) => state);
-  const cardListArr = state.cardsReducers.cards;
+  const [cardListArr, setCardListArr] = React.useState([]);
   useEffect(() => {
     dispatch(getCardsSagaAC(state.userReducers.user.token));
   }, [dispatch, state.userReducers.user.token]);
+  useEffect(() => {
+    setCardListArr(state.cardsReducers.cards);
+  }, [state.cardsReducers.cards]);
+
   return (
     <>
       {cardListArr.length !== 0 && (
@@ -58,7 +62,7 @@ export default function CardList() {
             </Link>
           </Card>
         ) : null}
-        {cardListArr.length ? (
+        {cardListArr.length && state.userReducers.user.isAuth ? (
           cardListArr.map((e) => {
             return <SimpleCard key={e.id} card={e} />;
           })

@@ -7,17 +7,12 @@ import {
   Button,
   Typography,
 } from '@material-ui/core/';
-// import Card from '@material-ui/core/Card';
-// import CardActions from '@material-ui/core/CardActions';
-// import CardContent from '@material-ui/core/CardContent';
-// import Button from '@material-ui/core/Button';
-// import Typography from '@material-ui/core/Typography';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+
 import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { likeCardSagaAC } from '../store/cards/actions.js';
+import Like from './Like.js';
 
 const useStyles = makeStyles({
   root: {
@@ -74,8 +69,7 @@ export default function SimpleCard({
             dispatch(likeCardSagaAC({ id, token }));
           }}
         >
-          {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-          {total_likes ? total_likes : null}
+          <Like like={[liked, total_likes]} />
         </Button>
       </CardActions>
     </Card>

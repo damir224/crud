@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useParams } from 'react-router';
+import { Redirect } from 'react-router-dom';
 
 const width = 300;
 const useStyles = makeStyles({
@@ -43,6 +44,7 @@ export default function CardInfo() {
   const { id } = useParams();
   const state = useSelector((state) => state);
   const token = state.userReducers.user.token;
+  const [redirect, setRedirect] = React.useState(false);
 
   const cardInfo = state.cardsReducers.cards.filter((e) => +e.id === +id)[0];
   const dispatch = useDispatch();
@@ -54,11 +56,13 @@ export default function CardInfo() {
     },
     onSubmit: ({ title, description }) => {
       dispatch(updateCardSagaAC({ title, description, id, token }));
+      setRedirect(true);
     },
   });
 
   return (
     <Box className={classes.root} component='span' m={1}>
+      {redirect && <Redirect to='/' />}
       <div className={classes.conteiner}>
         <form onSubmit={formik.handleSubmit}>
           <FormControl variant='outlined'>
@@ -104,6 +108,7 @@ export default function CardInfo() {
                 color='secondary'
                 onClick={() => {
                   dispatch(delCardSagaAC({ id, token }));
+                  setRedirect(true);
                 }}
               >
                 Delete

@@ -33,7 +33,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run pretest"
+      // "pre-commit": "npm run pretest",
+      "pre-commit": "test hook here"
     }
   },
   "eslintConfig": {

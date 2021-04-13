@@ -1,33 +1,12 @@
 import React from 'react';
-import { makeStyles, AppBar, Toolbar, Typography } from '@material-ui/core/';
-
+import { AppBar, Toolbar, Typography } from '@material-ui/core/';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  link: {
-    textDecoration: 'none',
-    color: 'white',
-  },
-  pos: {
-    display: 'flex',
-    justifyItems: 'center',
-    position: 'static',
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
+import { useStylesNavBar } from '../helpers/styles';
 
 export default function Navbar() {
-  const state = useSelector((state) => state);
-  const classes = useStyles();
+  const { isAuth } = useSelector((state) => state.userReducers.user);
+  const classes = useStylesNavBar();
 
   return (
     <div className={classes.root}>
@@ -39,7 +18,7 @@ export default function Navbar() {
             </Link>
           </Typography>
           <Typography color='inherit'>
-            {state.userReducers.user.isAuth ? (
+            {isAuth ? (
               <Link to='/logout' className={classes.link}>
                 Logout
               </Link>

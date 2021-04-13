@@ -2,31 +2,29 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import saga from 'redux-saga';
 import { all } from 'redux-saga/effects';
-
-import userReducers from './user/reducers.js';
-import cardsReducers from './cards/reducers.js';
+import userReducers from './user/reducers';
+import cardsReducers from './cards/reducers';
 import {
   getCardsWatcher,
   addCardWatcher,
   updateCardWatcher,
   delCardWatcher,
-  likeCardWatcher,
-} from './cards/saga/watchers.js';
-import { signupWatcher, loginWatcher } from './user/saga/watchers.js';
+  likeCardWatcher
+} from './cards/saga/watchers';
+import { signupWatcher, loginWatcher } from './user/saga/watchers';
 
 const sagaMiddleware = saga();
 
 const reducers = combineReducers({
   userReducers,
-  cardsReducers,
+  cardsReducers
 });
 
-const composeEnhancer =
-  process.env.NODE_ENV === 'production'
-    ? applyMiddleware(sagaMiddleware)
-    : composeWithDevTools(applyMiddleware(sagaMiddleware));
+const composeEnhancer = process.env.NODE_ENV === 'production'
+  ? applyMiddleware(sagaMiddleware)
+  : composeWithDevTools(applyMiddleware(sagaMiddleware));
 
-export const store = createStore(reducers, composeEnhancer);
+export default createStore(reducers, composeEnhancer);
 
 sagaMiddleware.run(function* () {
   yield all([
@@ -36,6 +34,6 @@ sagaMiddleware.run(function* () {
     delCardWatcher(),
     likeCardWatcher(),
     signupWatcher(),
-    loginWatcher(),
+    loginWatcher()
   ]);
 });

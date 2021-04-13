@@ -1,15 +1,15 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import CardList from './CardList.js';
-import AuthForm from './AuthForm.js';
+import { useSelector } from 'react-redux';
+import CardList from './CardList';
+import AuthForm from './AuthForm';
 import CardInfo from './CardInfo';
 import AddCard from './AddCard';
-import Logout from './Logout.js';
-import Page404 from './Page404.js';
-import { useSelector } from 'react-redux';
+import Logout from './Logout';
+import Page404 from './Page404';
 
 export default function SwitchFunc() {
-  const state = useSelector((state) => state);
+  const { role } = useSelector((state) => state.userReducers.user);
   return (
     <Switch>
       <Route exact path='/'>
@@ -25,14 +25,14 @@ export default function SwitchFunc() {
         <AuthForm type={'signup'} />
       </Route>
       <Route exact path='/info/:id'>
-        {state.userReducers.user.role === 'admin' ? (
+        {role === 'admin' ? (
           <CardInfo />
         ) : (
           <Redirect to='/' />
         )}
       </Route>
       <Route exact path='/create'>
-        {state.userReducers.user.role === 'admin' ? (
+        {role === 'admin' ? (
           <AddCard />
         ) : (
           <Redirect to='/' />

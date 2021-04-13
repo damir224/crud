@@ -1,40 +1,27 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import {
-  makeStyles,
   Card,
   CardActions,
   CardContent,
   Button,
-  Typography,
+  Typography
 } from '@material-ui/core/';
 
 import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { likeCardSagaAC } from '../store/cards/actions.js';
-import Like from './Like.js';
-
-const useStyles = makeStyles({
-  root: {
-    width: 300,
-    height: 300,
-    margin: 8,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
-  button: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-});
+import { likeCardSagaAC } from '../store/cards/actions';
+import Like from './Like';
+import { useStylesSumpleCard } from '../helpers/styles';
 
 export default function SimpleCard({
-  card: { id, title, content, liked, total_likes },
+  card: {
+    id, title, content, liked, total_likes
+  }
 }) {
-  const classes = useStyles();
-  const state = useSelector((state) => state);
-  const token = state.userReducers.user.token;
+  const classes = useStylesSumpleCard();
+  const { token, role } = useSelector((state) => state.userReducers.user);
   const dispatch = useDispatch();
 
   return (
@@ -44,7 +31,7 @@ export default function SimpleCard({
         border: 10,
         borderStyle: 'solid',
         borderRadius: 1,
-        borderWidth: 1,
+        borderWidth: 1
       }}
     >
       <CardContent>
@@ -56,7 +43,7 @@ export default function SimpleCard({
         </Typography>
       </CardContent>
       <CardActions className={classes.button}>
-        {state.userReducers.user.role === 'admin' ? (
+        {role === 'admin' ? (
           <Link to={`/info/${id}`}>
             <Button size='small'>
               <EditIcon />
@@ -69,7 +56,7 @@ export default function SimpleCard({
             dispatch(likeCardSagaAC({ id, token }));
           }}
         >
-          <Like like={[liked, total_likes]} />
+          <Like like={{ liked, total_likes }} />
         </Button>
       </CardActions>
     </Card>

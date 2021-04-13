@@ -4,66 +4,66 @@ import {
   TextField,
   makeStyles,
   Box,
-  Button,
+  Button
 } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCardSagaAC } from '../store/cards/actions.js';
 import { Redirect } from 'react-router-dom';
+import { addCardSagaAC } from '../store/cards/actions';
 
 const width = 300;
 const useStyles = makeStyles({
   root: {
     margin: 8,
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
-  conteiner: {
+  container: {
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
     border: 'solid 1px lightgrey',
-    width: width,
-    height: width + 50,
+    width,
+    height: width + 50
   },
   title: {
     marginTop: '2em',
     borderColor: 'red',
-    width: '30ch',
+    width: '30ch'
   },
   description: {
     marginTop: '1em',
-    height: width - 150,
+    height: width - 150
   },
-  button: { marginTop: '2em' },
+  button: { marginTop: '2em' }
 });
 
 export default function AddCard() {
-  const state = useSelector((state) => state);
+  const { token } = useSelector((state) => state.userReducers.user);
   const dispatch = useDispatch();
   const classes = useStyles();
   const refDone = React.useRef(false);
   const formik = useFormik({
     initialValues: {
       title: '',
-      description: '',
+      description: ''
     },
     onSubmit: async ({ title, description }) => {
       await dispatch(
         addCardSagaAC({
           title,
           description,
-          token: state.userReducers.user.token,
+          token
         })
       );
       refDone.current = true;
-    },
+    }
   });
 
   return (
     <Box className={classes.root} component='span' m={1}>
       {refDone.current && <Redirect to='/' />}
-      <div className={classes.conteiner}>
+      <div className={classes.container}>
         <form onSubmit={formik.handleSubmit}>
           <FormControl variant='outlined'>
             <TextField

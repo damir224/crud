@@ -1,69 +1,70 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateCardSagaAC, delCardSagaAC } from '../store/cards/actions.js';
 import {
   FormControl,
   TextField,
   makeStyles,
   Box,
-  Button,
+  Button
 } from '@material-ui/core';
 import { useFormik } from 'formik';
-import { useParams } from 'react-router';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
+import { updateCardSagaAC, delCardSagaAC } from '../store/cards/actions';
 
 const width = 300;
 const useStyles = makeStyles({
   root: {
     margin: 8,
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
-  conteiner: {
+  container: {
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
     border: 'solid 1px lightgrey',
-    width: width,
-    height: width + 50,
+    width,
+    height: width + 50
   },
   title: {
     marginTop: '2em',
     borderColor: 'red',
-    width: '30ch',
+    width: '30ch'
   },
   description: {
     marginTop: '1em',
-    height: width - 150,
+    height: width - 150
   },
   buttonGroup: { display: 'flex', justifyContent: 'space-between' },
-  button: { marginTop: '2em' },
+  button: { marginTop: '2em' }
 });
 
 export default function CardInfo() {
   const { id } = useParams();
-  const state = useSelector((state) => state);
-  const token = state.userReducers.user.token;
+  const token = useSelector((states) => states.userReducers.user.token);
+  const cards = useSelector((states) => states.cardsReducers.cards);
   const [redirect, setRedirect] = React.useState(false);
 
-  const cardInfo = state.cardsReducers.cards.filter((e) => +e.id === +id)[0];
+  const cardInfo = cards.filter((e) => +e.id === +id)[0];
   const dispatch = useDispatch();
   const classes = useStyles();
   const formik = useFormik({
     initialValues: {
       title: cardInfo.title,
-      description: cardInfo.content,
+      description: cardInfo.content
     },
     onSubmit: ({ title, description }) => {
-      dispatch(updateCardSagaAC({ title, description, id, token }));
+      dispatch(updateCardSagaAC({
+        title, description, id, token
+      }));
       setRedirect(true);
-    },
+    }
   });
 
   return (
     <Box className={classes.root} component='span' m={1}>
       {redirect && <Redirect to='/' />}
-      <div className={classes.conteiner}>
+      <div className={classes.container}>
         <form onSubmit={formik.handleSubmit}>
           <FormControl variant='outlined'>
             <TextField

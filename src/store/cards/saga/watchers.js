@@ -1,12 +1,12 @@
 import { takeEvery } from 'redux-saga/effects';
-import actionTypes from '../../actionTypes.js';
+import actionTypes from '../../actionTypes';
 import {
   getCardsWorker,
   addCardWorker,
   updateCardWorker,
   delCardWorker,
-  likeCardWorker,
-} from './workers.js';
+  likeCardWorker
+} from './workers';
 
 export function* getCardsWatcher() {
   yield takeEvery(actionTypes.GET_CARDS_SAGA, getCardsWorker);

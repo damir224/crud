@@ -1,39 +1,24 @@
 import React, { useEffect } from 'react';
-import { makeStyles, Container, Card, Typography } from '@material-ui/core/';
+import { Container, Card, Typography } from '@material-ui/core';
 import AddBoxIcon from '@material-ui/icons/AddBox';
-import SimpleCard from './SimpleCard';
-import { getCardsSagaAC } from '../store/cards/actions.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    maxWidth: 1100,
-  },
-  add: {
-    width: 300,
-    height: 300,
-    margin: 8,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+import SimpleCard from './SimpleCard';
+import { getCardsSagaAC } from '../store/cards/actions';
+import { useStylesCardList } from '../helpers/styles';
 
 export default function CardList() {
   const dispatch = useDispatch();
-  const classes = useStyles();
-  const state = useSelector((state) => state);
+  const classes = useStylesCardList();
+  const { token, role, isAuth } = useSelector((state) => state.userReducers.user);
+  const { cards } = useSelector((state) => state.cardsReducers);
   const [cardListArr, setCardListArr] = React.useState([]);
   useEffect(() => {
-    dispatch(getCardsSagaAC(state.userReducers.user.token));
-  }, [dispatch, state.userReducers.user.token]);
+    dispatch(getCardsSagaAC(token));
+  }, [dispatch, token]);
   useEffect(() => {
-    setCardListArr(state.cardsReducers.cards);
-  }, [state.cardsReducers.cards]);
+    setCardListArr(cards);
+  }, [cards]);
 
   return (
     <>
@@ -43,13 +28,13 @@ export default function CardList() {
         </Typography>
       )}
       <Container className={classes.root}>
-        {state.userReducers.user.role === 'admin' ? (
+        {role === 'admin' ? (
           <Card
             className={classes.add}
             style={{
               borderStyle: 'dashed',
               borderRadius: 4,
-              borderWidth: 1,
+              borderWidth: 1
             }}
           >
             <Link
@@ -62,10 +47,8 @@ export default function CardList() {
             </Link>
           </Card>
         ) : null}
-        {cardListArr.length && state.userReducers.user.isAuth ? (
-          cardListArr.map((e) => {
-            return <SimpleCard key={e.id} card={e} />;
-          })
+        {cardListArr.length && isAuth ? (
+          cardListArr.map((e) => <SimpleCard key={e.id} card={e} />)
         ) : (
           <Typography variant='h4'>
             Sorry! You need to be logged in to access this page.

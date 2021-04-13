@@ -1,13 +1,13 @@
+/* eslint-disable consistent-return */
 import { put, call } from 'redux-saga/effects';
-import { loginAC } from '../actions.js';
-import uniFetch from '../../helper';
+import { loginAC } from '../actions';
+import uniFetch from '../../../helpers/helper';
 
 export function* signupWorker({ payload }) {
-  const url = 'http://rest-api.noveogroup.com/api/v1/register';
-  const urlAuth = 'http://rest-api.noveogroup.com/api/v1/user';
+  const url = `${process.env.REACT_APP_URL}/register`;
+  const urlAuth = `${process.env.REACT_APP_URL}/user`;
   try {
     const response = yield call(uniFetch, null, url, 'POST', payload.obj);
-    // const response = yield call(signupFetch, payload);
     if (response.success) {
       const { data, success } = yield call(
         uniFetch,
@@ -15,7 +15,6 @@ export function* signupWorker({ payload }) {
         urlAuth,
         'GET'
       );
-      // const { data, success } = yield call(userInfoFetch, response);
       if (success) return yield put(loginAC(data.user, response.data));
     }
     throw response.errors;
@@ -24,11 +23,10 @@ export function* signupWorker({ payload }) {
   }
 }
 export function* loginWorker({ payload }) {
-  const url = 'http://rest-api.noveogroup.com/api/v1/login';
-  const urlAuth = 'http://rest-api.noveogroup.com/api/v1/user';
+  const url = `${process.env.REACT_APP_URL}/login`;
+  const urlAuth = `${process.env.REACT_APP_URL}/user`;
   try {
     const response = yield call(uniFetch, null, url, 'POST', payload);
-    // const response = yield call(loginFetch, payload);
     if (response.success) {
       const { data, success } = yield call(
         uniFetch,
@@ -36,12 +34,10 @@ export function* loginWorker({ payload }) {
         urlAuth,
         'GET'
       );
-      // const { data, success } = yield call(userInfoFetch, response);
       if (success) return yield put(loginAC(data.user, response.data));
     }
     throw response.errors;
   } catch (error) {
     console.error('Ошибка:', error);
-    // if (error === 'authenticate.credentials_invalid') yield put(authErrAC())
   }
 }

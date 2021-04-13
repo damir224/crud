@@ -1,9 +1,9 @@
-import actionTypes from '../actionTypes.js';
-const prelodableState = {
-  cards: [],
-  // cardInfo: {},
+import actionTypes from '../actionTypes';
+
+const preloadableState = {
+  cards: []
 };
-const cardsReducers = (state = prelodableState, action) => {
+const cardsReducers = (state = preloadableState, action) => {
   switch (action.type) {
     case actionTypes.GET_CARDS:
       return { ...state, cards: [...action.payload] };
@@ -13,33 +13,22 @@ const cardsReducers = (state = prelodableState, action) => {
       return {
         ...state,
         cards: [
-          ...state.cards.map((e) =>
-            e.id === action.payload.post.id ? action.payload.post : e
-          ),
-        ],
+          ...state.cards.map((e) => (e.id === action.payload.post.id ? action.payload.post : e))
+        ]
       };
     case actionTypes.LIKE_CARD:
-      console.log(`state.cards`, state.cards);
-      // console.log(
-      //   `afetr`,
-      [...state.cards].map((e) =>
-        console.log(
-          e.id,
-          action.payload.post.id,
-          e.id === action.payload.post.id
-        )
-      );
-      // );
       return {
         ...state,
-        cards: [...state.cards].map((e) =>
-          e.id === action.payload.post.id ? { ...e, like: !e.like } : e
-        ),
+        cards: [...state.cards].map((e) => {
+          if (e.id === action.payload.id) {
+            return action.payload;
+          }
+          return e;
+        })
       };
     case actionTypes.DEL_CARD:
       return {
-        ...state,
-        // cards: [...state.cards].filter((e) => e !== +action.payload.id),
+        ...state
       };
     default:
       return state;

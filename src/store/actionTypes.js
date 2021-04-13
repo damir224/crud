@@ -16,7 +16,7 @@ const actionTypes = {
   SIGNUP_AUTH: 'SIGNUP_AUTH',
   LOGIN_SAGA: 'LOGIN_SAGA',
   LOGIN_AUTH: 'LOGIN_AUTH',
-  LOGOUT_AUTH: 'LOGOUT_AUTH',
+  LOGOUT_AUTH: 'LOGOUT_AUTH'
 };
 
 export default actionTypes;

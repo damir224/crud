@@ -11,7 +11,7 @@ export function* signupWorker({ payload }) {
     if (response.success) {
       const { data, success } = yield call(
         uniFetch,
-        payload.data.token,
+        response.data.token,
         urlAuth,
         'GET'
       );
